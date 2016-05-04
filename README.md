@@ -7,12 +7,14 @@ IBM DB2 Extension for Yii 2 (yii2-ibm-db2)
 
 This extension adds [IBM DB2](http://www-01.ibm.com/software/data/db2/) database engine extension for the [Yii framework 2.0](http://www.yiiframework.com).
 
+This branch use the last stable version of Yii2 (2.0.8)
+
 [![Yii2](https://img.shields.io/badge/Powered_by-Yii_Framework-green.svg?style=flat)](http://www.yiiframework.com/)
-[![Build Status](https://travis-ci.org/edgardmessias/yii2-ibm-db2.svg?branch=master)](https://travis-ci.org/edgardmessias/yii2-ibm-db2)
-[![Dependency Status](https://www.versioneye.com/php/edgardmessias:yii2-ibm-db2/dev-master/badge.png)](https://www.versioneye.com/php/edgardmessias:yii2-ibm-db2/dev-master)
+[![Build Status](https://travis-ci.org/edgardmessias/yii2-ibm-db2.svg?branch=yii2-stable)](https://travis-ci.org/edgardmessias/yii2-ibm-db2)
+[![Dependency Status](https://www.versioneye.com/php/edgardmessias:yii2-ibm-db2/dev-yii2-stable/badge.png)](https://www.versioneye.com/php/edgardmessias:yii2-ibm-db2/dev-yii2-stable)
 [![Reference Status](https://www.versioneye.com/php/edgardmessias:yii2-ibm-db2/reference_badge.svg)](https://www.versioneye.com/php/edgardmessias:yii2-ibm-db2/references)
-[![Code Coverage](https://scrutinizer-ci.com/g/edgardmessias/yii2-ibm-db2/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/edgardmessias/yii2-ibm-db2/?branch=master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/edgardmessias/yii2-ibm-db2/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/edgardmessias/yii2-ibm-db2/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/edgardmessias/yii2-ibm-db2/badges/coverage.png?b=yii2-stable)](https://scrutinizer-ci.com/g/edgardmessias/yii2-ibm-db2/?branch=yii2-stable)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/edgardmessias/yii2-ibm-db2/badges/quality-score.png?b=yii2-stable)](https://scrutinizer-ci.com/g/edgardmessias/yii2-ibm-db2/?branch=yii2-stable)
 
 Requirements
 ------------
