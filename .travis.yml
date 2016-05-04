@@ -1,16 +1,16 @@
 language: php
 
 php:
-  - 5.4
-  - 5.5
-  - 5.6
+#  - 5.4
+#  - 5.5
+#  - 5.6
   - 7.0
   - nightly
 
 matrix:
   fast_finish: true
   allow_failures:
-    - php: 7.0
+#    - php: 7.0
     - php: nightly
 
 sudo: true
@@ -37,8 +37,7 @@ before_install:
 
   # INSTALL
   # Install the required libraries
-  - sudo apt-get install libaio1 lib32stdc++6 -y
-  - sudo apt-get install -qq libpam-ldap:i386
+  - sudo apt-get install -qqy libaio1 lib32stdc++6 libpam-ldap:i386 gdb
   - sudo ln -s /lib/i386-linux-gnu/libpam.so.0 /lib/libpam.so.0
 
   # Checks the prerequisites
@@ -56,8 +55,10 @@ before_install:
   - sudo su - db2inst1 -c "db2 create db test ; db2 connect to test ; db2 grant dbadm on database to user test"
   
   # Install pdo_ibm
+  - cd /tmp
   - export DB2DIR=/home/db2inst1/sqllib
   - git clone https://git.php.net/repository/pecl/database/pdo_ibm.git
+  - patch pdo_ibm/ibm_driver.c < ${TRAVIS_BUILD_DIR}/tests/ci/travis/ibm_driver.c.patch || true
   - (cd pdo_ibm/; phpize && ./configure --with-pdo-ibm=${DB2DIR} && make && sudo make install)
 
 install:
@@ -78,17 +79,22 @@ install:
   - travis_retry composer install --prefer-source -o --no-interaction
 
 before_script:
-  - |
-    if [ $TRAVIS_PHP_VERSION = '5.6' ]; then
-      PHPUNIT_FLAGS="--coverage-clover=coverage.clover"
-    fi
+  - phpenv config-rm xdebug.ini
+  - ulimit -c
+  - ulimit -c unlimited -S
+#  - |
+#    if [ $TRAVIS_PHP_VERSION = '5.6' ]; then
+#      PHPUNIT_FLAGS="--coverage-clover=coverage.clover"
+#    fi
 
 script:
-  - vendor/bin/phpunit --verbose $PHPUNIT_FLAGS
+  - vendor/bin/phpunit --verbose $PHPUNIT_FLAGS --debug || RESULT=$?
+  - for i in $(find ./ -maxdepth 1 -name 'core*' -print); do gdb `php -r 'echo PHP_BINARY;'` core* -ex "thread apply all bt" -ex "set pagination 0" -batch; done;
+  - if [[ ${RESULT} != 0 ]]; then exit $RESULT ; fi;
 
-after_script:
-  - |
-    if [ $TRAVIS_PHP_VERSION = '5.6' ]; then
-      travis_retry wget https://scrutinizer-ci.com/ocular.phar
-      php ocular.phar code-coverage:upload --format=php-clover coverage.clover
-    fi
+#after_script:
+#  - |
+#    if [ $TRAVIS_PHP_VERSION = '5.6' ]; then
+#      travis_retry wget https://scrutinizer-ci.com/ocular.phar
+#      php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+#    fi

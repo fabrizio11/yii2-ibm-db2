@@ -1,0 +1,33 @@
+diff --git a/ibm_driver.c b/ibm_driver.c
+index 632783d..15a9034 100644
+--- a/ibm_driver.c
++++ b/ibm_driver.c
+@@ -954,17 +954,17 @@ static int dbh_connect(pdo_dbh_t *dbh, zval *driver_options TSRMLS_DC)
+ 		int i = 0;
+ 		ulong num_idx;
+ 		char *opt_key;
+-		zval **data;
+ #if PHP_MAJOR_VERSION >= 7
++		zval *data;
+ 		zend_long option_num = 0;
+ #else
++		zval **data;
+ 		long option_num = 0;
+ #endif
+ 		char *option_str = NULL;
+ 
+ 		int numOpts = zend_hash_num_elements(Z_ARRVAL_P(driver_options));
+ #if PHP_MAJOR_VERSION >= 7
+-                
+                         ZEND_HASH_FOREACH_KEY_VAL(Z_ARRVAL_P(driver_options), num_idx, opt_key, data) {
+                                 if (opt_key) {
+                                         continue;
+@@ -984,7 +984,7 @@ static int dbh_connect(pdo_dbh_t *dbh, zval *driver_options TSRMLS_DC)
+ 				option_str = Z_STRVAL_PP(data);
+ 			} else {
+ #if PHP_MAJOR_VERSION >= 7
+-				option_num = Z_LVAL(**data);
++				option_num = Z_LVAL_P(data);
+ #else
+ 				option_num = Z_LVAL_PP(data);
+ #endif
