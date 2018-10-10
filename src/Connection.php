@@ -45,6 +45,7 @@ class Connection extends \yii\db\Connection
     public $attributes = [
         PDO::ATTR_CASE => PDO::CASE_NATURAL,
         PDO::ATTR_STRINGIFY_FETCHES => true,
+        //PDO::ATTR_AUTOCOMMIT => false, // ST ***
     ];
     
     /**
@@ -82,7 +83,7 @@ class Connection extends \yii\db\Connection
             }
         }
 
-        if($this->defaultSchema && !$this->isISeries){
+        if($this->defaultSchema){
             $this->pdo->exec('SET CURRENT SCHEMA ' . $this->pdo->quote($this->defaultSchema));
         }
         
